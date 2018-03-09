@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { BrowserRouter, Switch, Route } from "react-router-dom"
-import { injectGlobal } from "styled-components"
+import styled, { injectGlobal } from "styled-components"
 import Header from "./Header"
 import PostsList from "./PostsList"
 import PostDetails from "./PostDetails"
@@ -26,29 +26,35 @@ injectGlobal`
   }
 `
 
+const Content = styled.div`
+  padding: 2rem;
+`
+
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div>
           <Header />
-          <Switch>
-            <Route
-              exact
-              path="/:category?"
-              render={({ match }) => (
-                <PostsList category={match.params.category} />
-              )}
-            />
-            <Route
-              exact
-              path="/:category/:postId"
-              render={({ match }) => (
-                <PostDetails postId={match.params.postId} />
-              )}
-            />
-            <Route path="/" component={NotFound} />
-          </Switch>
+          <Content>
+            <Switch>
+              <Route
+                exact
+                path="/:category?"
+                render={({ match }) => (
+                  <PostsList category={match.params.category} />
+                )}
+              />
+              <Route
+                exact
+                path="/:category/:postId"
+                render={({ match }) => (
+                  <PostDetails postId={match.params.postId} />
+                )}
+              />
+              <Route path="/" component={NotFound} />
+            </Switch>
+          </Content>
         </div>
       </BrowserRouter>
     )

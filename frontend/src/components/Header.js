@@ -2,6 +2,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { connect } from "react-redux"
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -55,7 +56,7 @@ const NavListItem = styled.li`
   }
 `
 
-const Header = () => {
+const Header = ({ categories }) => {
   return (
     <HeaderWrapper>
       <Main>
@@ -66,7 +67,7 @@ const Header = () => {
       </Main>
       <Nav>
         <NavList>
-          {[{ name: "cat", path: "cat" }].map(category => (
+          {categories.map(category => (
             <NavListItem key={category.path}>
               <Link to={category.path}>{category.name}</Link>
             </NavListItem>
@@ -77,4 +78,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default connect(state => ({ categories: state.categories }))(Header)
