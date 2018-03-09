@@ -1,5 +1,4 @@
-# P2 Readable
-## Udacity React Nanodegree
+# P2 Readable - Udacity React Nanodegree
 
 Install this project by running:
 
