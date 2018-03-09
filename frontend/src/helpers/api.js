@@ -15,7 +15,7 @@ const headers = method =>
  * CURRIED FETCH
  */
 
-const fetch = (url, params, method) => () =>
+const fetch = (url, params, method) =>
   unfetch(API_URL + url, {
     method: method ? method : !params ? "GET" : "POST",
     headers: headers(method)
@@ -25,9 +25,9 @@ const fetch = (url, params, method) => () =>
  * API METHODS
  */
 
-export const fetchCategories = fetch("/categories")
+export const fetchCategories = () => fetch("/categories")
+export const fetchPosts = () => fetch("/posts")
 export const fetchCategoryPosts = category => fetch(`/${category}/posts`)
-export const fetchPosts = fetch("/posts")
 
 export const createPost = post => fetch("/posts", post)
 export const fetchPost = postId => fetch(`/posts/${postId}`)

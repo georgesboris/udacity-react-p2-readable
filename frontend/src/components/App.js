@@ -40,7 +40,7 @@ injectGlobal`
  */
 
 const Content = styled.div`
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 32rem;
 `
 
 /**

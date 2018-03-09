@@ -11,9 +11,19 @@ export const fetchCategories = () => dispatch => {
   })
 }
 
+function _addPost(post) {
+  return { type: actions.ADD_POST, payload: post }
+}
+
 export const fetchPosts = () => dispatch => {
   api.fetchPosts().then(posts => {
-    console.log(posts)
+    posts.forEach(post => dispatch(_addPost(post)))
+  })
+}
+
+export const fetchCategoryPosts = category => dispatch => {
+  api.fetchCategoryPosts(category).then(posts => {
+    posts.forEach(post => dispatch(_addPost(post)))
   })
 }
 

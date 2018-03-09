@@ -8,6 +8,10 @@ import { setOrderBy } from "../redux/actions"
 import styled from "styled-components"
 import PropTypes from "prop-types"
 
+/**
+ * STYLED COMPONENTS
+ */
+
 const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
@@ -19,7 +23,7 @@ const HeaderWrapper = styled.header`
   padding: 2rem;
   background: black;
   background: linear-gradient(45deg, #000 0%, #222 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 2rem rgba(0, 0, 0, 0.6);
 `
 
@@ -45,11 +49,38 @@ const Title = styled.h1`
   color: yellow;
 `
 
-const TagLine = styled.h2`
+const TagLineWrapper = styled.h2`
+  position: relative;
+  display: block;
+  padding: 1rem 0;
   font-weight: 300;
   line-height: 1.4em;
   letter-spacing: 0.02em;
   color: #999;
+  &::before,
+  &::after {
+    z-index: 0;
+    font-family: serif;
+    font-size: 8rem;
+    display: block;
+    position: absolute;
+    color: #2a2a2a;
+  }
+  &::before {
+    content: "“";
+    top: 4rem;
+    left: -1.6rem;
+  }
+  &::after {
+    content: "”";
+    top: 4rem;
+    right: -1.6rem;
+  }
+`
+
+const TagLine = styled.span`
+  position: relative;
+  z-index: 2;
 `
 
 const MenuSectionWrapper = styled.nav`
@@ -77,11 +108,13 @@ const MenuSectionListItem = styled.li`
   & > a,
   & > button {
     display: block;
+    width: 100%;
     padding: 0.5rem 0;
     border: none;
     background: none;
     box-shadow: none;
     font-size: 1.2rem;
+    text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.3em;
     color: ${props => (props.active ? "yellow" : "inherit")};
@@ -92,6 +125,10 @@ const MenuSectionListItem = styled.li`
     }
   }
 `
+
+/**
+ * HELPER COMPONENTS
+ */
 
 const MenuSection = ({ title, items }) => (
   <MenuSectionWrapper>
@@ -110,15 +147,21 @@ const MenuSection = ({ title, items }) => (
   </MenuSectionWrapper>
 )
 
+/**
+ * MAIN COMPONENT
+ */
+
 const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
   return (
     <HeaderWrapper>
       <Main>
         <MainLink to="/">
           <Title>Readable</Title>
-          <TagLine>
-            Flamming comments on contemporary genre defining rappers
-          </TagLine>
+          <TagLineWrapper>
+            <TagLine>
+              Flamming comments on contemporary genre defining rappers.
+            </TagLine>
+          </TagLineWrapper>
         </MainLink>
       </Main>
       <MenuSection
@@ -142,10 +185,10 @@ const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
         title="order by"
         items={[
           {
-            id: "votes",
+            id: "voteScore",
             label: "number of votes",
-            active: orderBy === "votes",
-            onClick: () => setOrderBy("votes")
+            active: orderBy === "voteScore",
+            onClick: () => setOrderBy("voteScore")
           },
           {
             id: "timestamp",
@@ -161,7 +204,7 @@ const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
 Header.propTypes = {
   activeCategory: PropTypes.string,
   setOrderBy: PropTypes.func.isRequired,
-  orderBy: PropTypes.oneOf(["votes", "timestamp"]).isRequired,
+  orderBy: PropTypes.oneOf(["voteScore", "timestamp"]).isRequired,
   categories: PropTypes.arrayOf(
     PropTypes.shape({
       path: PropTypes.string.isRequired,
