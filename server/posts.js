@@ -20,7 +20,7 @@ const defaultData = {
     title: "Kanye West is losing it's grip…",
     body: "Just kidding. Dude is still tha bomb.",
     author: "thingone",
-    category: "k-dot",
+    category: "yeezy",
     voteScore: -5,
     deleted: false,
     commentCount: 0
