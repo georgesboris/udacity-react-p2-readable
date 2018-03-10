@@ -119,10 +119,6 @@ const MenuSectionListItem = styled.li`
     letter-spacing: 0.3em;
     color: ${props => (props.active ? "yellow" : "inherit")};
     cursor: pointer;
-    &:active,
-    &:focus {
-      outline: none;
-    }
   }
 `
 

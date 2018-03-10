@@ -27,6 +27,12 @@ export const fetchCategoryPosts = category => dispatch => {
   })
 }
 
+export const votePost = (postId, voteType) => dispatch => {
+  api.votePost(postId, voteType).then(post => {
+    dispatch(_addPost(post))
+  })
+}
+
 /**
  * ACTIONS
  */

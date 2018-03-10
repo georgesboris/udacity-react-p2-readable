@@ -33,6 +33,10 @@ injectGlobal`
     text-decoration: none;
     color: inherit;
   }
+  button:focus,
+  button:active {
+    outline: none;
+  }
 `
 
 /**

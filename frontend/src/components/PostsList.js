@@ -74,7 +74,7 @@ class PostsList extends Component {
         <List>
           {posts.map(postId => (
             <ListItem key={postId}>
-              <Post postId={postId} />
+              <Post postId={postId} showBody isLink />
             </ListItem>
           ))}
         </List>

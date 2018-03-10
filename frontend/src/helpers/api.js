@@ -18,7 +18,8 @@ const headers = method =>
 const fetch = (url, params, method) =>
   unfetch(API_URL + url, {
     method: method ? method : !params ? "GET" : "POST",
-    headers: headers(method)
+    headers: headers(method),
+    body: params ? JSON.stringify(params) : null
   }).then(res => (res.json ? res.json() : res))
 
 /**
@@ -35,13 +36,14 @@ export const updatePost = (postId, post) =>
   fetch(`/posts/${postId}`, post, "PUT")
 export const removePost = postId => fetch(`/posts/${postId}`, null, "DELETE")
 
-export const votePost = postId => vote => fetch(`/posts/${postId}`, { vote })
+export const votePost = (postId, option) =>
+  fetch(`/posts/${postId}`, { option })
 export const fetchPostComments = postId => fetch(`/posts/${postId}/comments`)
 
 export const createComment = comment => fetch(`/comments`, comment)
 export const fetchComment = commentId => fetch(`/comments/${commentId}`)
-export const voteComment = commentId => vote =>
-  fetch(`/comments/${commentId}`, { vote })
+export const voteComment = (commentId, option) =>
+  fetch(`/comments/${commentId}`, { option })
 export const updateComment = (commentId, comment) =>
   fetch(`/comments/${commentId}`, { comment }, "PUT")
 export const removeComment = commentId =>
