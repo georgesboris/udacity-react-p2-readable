@@ -164,8 +164,8 @@ const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
         title="filter by"
         items={[
           {
-            id: "none",
-            label: "none",
+            id: "all",
+            label: "all",
             to: "/",
             active: !activeCategory
           },
@@ -182,13 +182,13 @@ const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
         items={[
           {
             id: "voteScore",
-            label: "number of votes",
+            label: "flameness",
             active: orderBy === "voteScore",
             onClick: () => setOrderBy("voteScore")
           },
           {
             id: "timestamp",
-            label: "creation date",
+            label: "hotness",
             active: orderBy === "timestamp",
             onClick: () => setOrderBy("timestamp")
           }

@@ -28,25 +28,17 @@ export const fetchCategoryPosts = category => dispatch => {
 }
 
 export const fetchPost = postId => (dispatch, getState) => {
-  const state = getState()
-
-  if (state.posts[postId]) {
-    return state.posts[postId].deleted
-      ? Promise.reject()
-      : Promise.resolve(state.posts[postId])
-  }
-
   return Promise.all([
     api.fetchPost(postId),
     api.fetchPostComments(postId)
   ]).then(([post, comments]) => {
-    if (!post || post.error) {
+    if (!post || post.error || post.deleted) {
       return Promise.reject()
     }
 
     dispatch(_addPost(post))
     dispatch({
-      action: actions.SET_COMMENTS,
+      type: actions.SET_COMMENTS,
       payload: { postId, comments }
     })
 
@@ -54,9 +46,15 @@ export const fetchPost = postId => (dispatch, getState) => {
   })
 }
 
-export const votePost = (postId, voteType) => dispatch => {
-  api.votePost(postId, voteType).then(post => {
+export const votePost = (postId, option) => dispatch => {
+  api.votePost(postId, option).then(post => {
     dispatch(_addPost(post))
+  })
+}
+
+export const voteComment = (commentId, option) => dispatch => {
+  api.voteComment(commentId, option).then(comment => {
+    dispatch({ type: actions.UPDATE_COMMENT, payload: comment })
   })
 }
 
