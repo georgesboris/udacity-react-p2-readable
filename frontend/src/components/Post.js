@@ -62,7 +62,7 @@ const ActionButton = styled.button`
   box-shadow: none;
   color: white;
   cursor: pointer;
-  opacity: 0.2;
+  opacity: 0.1;
   &:hover {
     opacity: 1;
   }

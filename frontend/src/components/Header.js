@@ -172,7 +172,7 @@ const Header = ({ activeCategory, categories, orderBy, setOrderBy }) => {
           ...categories.map(category => ({
             id: category.path,
             label: category.name,
-            to: category.path,
+            to: "/" + category.path,
             active: category.path === activeCategory
           }))
         ]}

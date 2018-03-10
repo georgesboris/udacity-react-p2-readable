@@ -52,20 +52,28 @@ const postsSelector = createSelector(
 
 class PostsList extends Component {
   componentDidMount() {
-    this.fetchPosts(this.props.category, this.props.allCategories)
+    this.setup(this.props.category, true, this.props.allCategories)
   }
   componentWillReceiveProps(nextProps) {
     if (
-      this.props.category !== nextProps.category ||
+      this.props.activeCategory !== nextProps.activeCategory ||
       this.props.allCategories !== nextProps.allCategories
     ) {
-      this.fetchPosts(nextProps.category, this.props.allCategories)
+      this.setup(
+        nextProps.category,
+        this.props.activeCategory !== nextProps.activeCategory,
+        nextProps.allCategories
+      )
     }
   }
 
-  fetchPosts = (category, allCategories) => {
-    if (allCategories && !category) {
+  setup = (category, shouldFetch, allCategories) => {
+    if (!!allCategories.length && !category) {
       this.props.history.replace("/")
+    }
+
+    if (!shouldFetch) {
+      return
     }
 
     if (category) {
@@ -83,7 +91,7 @@ class PostsList extends Component {
         <List>
           {posts.map(postId => (
             <ListItem key={postId}>
-              <Post postId={postId} showBody isLink />
+              <Post isLink postId={postId} />
             </ListItem>
           ))}
         </List>
@@ -99,7 +107,7 @@ export default compose(
       posts: postsSelector(state, props),
       allCategories: state.categories,
       category: props.activeCategory
-        ? state.categories.find(o => o.path === props.category)
+        ? state.categories.find(o => o.path === props.activeCategory)
         : props.category
     }),
     {

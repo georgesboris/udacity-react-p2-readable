@@ -41,7 +41,7 @@ class PostDetails extends Component {
     const { postId } = this.props
     return (
       <article>
-        <Post postId={postId} />
+        <Post showBody postId={postId} />
       </article>
     )
   }
