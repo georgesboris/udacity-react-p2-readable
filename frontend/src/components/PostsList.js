@@ -1,7 +1,9 @@
 // react
 import React, { Component } from "react"
 import Post from "./Post"
+import { withRouter } from "react-router"
 // redux
+import { compose } from "redux"
 import { connect } from "react-redux"
 import { fetchPosts, fetchCategoryPosts } from "../redux/actions"
 // etc
@@ -35,11 +37,11 @@ const ListItem = styled.li`
 const postsSelector = createSelector(
   state => state.posts,
   state => state.orderBy,
-  (state, props) => props.category,
-  (posts, orderBy, category) =>
-    category
+  (state, props) => props.activeCategory,
+  (posts, orderBy, activeCategory) =>
+    activeCategory
       ? Object.keys(posts)
-          .filter(id => posts[id].category === category)
+          .filter(id => posts[id].category === activeCategory)
           .sort((a, b) => posts[a][orderBy] - posts[b][orderBy])
       : Object.keys(posts).sort((a, b) => posts[a][orderBy] - posts[b][orderBy])
 )
@@ -50,15 +52,22 @@ const postsSelector = createSelector(
 
 class PostsList extends Component {
   componentDidMount() {
-    this.fetchPosts(this.props.category)
+    this.fetchPosts(this.props.category, this.props.allCategories)
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.category !== nextProps.category) {
-      this.fetchPosts(nextProps.category)
+    if (
+      this.props.category !== nextProps.category ||
+      this.props.allCategories !== nextProps.allCategories
+    ) {
+      this.fetchPosts(nextProps.category, this.props.allCategories)
     }
   }
 
-  fetchPosts = category => {
+  fetchPosts = (category, allCategories) => {
+    if (allCategories && !category) {
+      this.props.history.replace("/")
+    }
+
     if (category) {
       this.props.fetchCategoryPosts(category.path)
     } else {
@@ -83,15 +92,19 @@ class PostsList extends Component {
   }
 }
 
-export default connect(
-  (state, props) => ({
-    category: props.category
-      ? state.categories.find(o => o.path === props.category)
-      : props.category,
-    posts: postsSelector(state, props)
-  }),
-  {
-    fetchPosts,
-    fetchCategoryPosts
-  }
+export default compose(
+  withRouter,
+  connect(
+    (state, props) => ({
+      posts: postsSelector(state, props),
+      allCategories: state.categories,
+      category: props.activeCategory
+        ? state.categories.find(o => o.path === props.category)
+        : props.category
+    }),
+    {
+      fetchPosts,
+      fetchCategoryPosts
+    }
+  )
 )(PostsList)

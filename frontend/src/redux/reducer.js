@@ -1,11 +1,13 @@
 export const SET_CATEGORIES = "readable/SET_CATEGORIES"
 export const SET_ORDER_BY = "readable/SET_ORDER_BY"
 export const ADD_POST = "readable/ADD_POST"
+export const SET_COMMENTS = "readable/SET_COMMENTS"
 
 const initialStore = {
   categories: [],
   orderBy: "voteScore",
-  posts: {}
+  posts: {},
+  comments: {}
 }
 
 export default function(state = initialStore, action) {
@@ -26,6 +28,14 @@ export default function(state = initialStore, action) {
         posts: {
           ...state.posts,
           [action.payload.id]: action.payload
+        }
+      }
+    case SET_COMMENTS:
+      return {
+        ...state,
+        comments: {
+          ...state.comments,
+          [action.payload.postId]: action.payload.comments
         }
       }
     default:

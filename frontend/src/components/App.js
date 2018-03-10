@@ -77,7 +77,7 @@ class App extends Component {
                 exact
                 path="/:category?"
                 render={({ match }) => (
-                  <PostsList category={match.params.category} />
+                  <PostsList activeCategory={match.params.category} />
                 )}
               />
               <Route
