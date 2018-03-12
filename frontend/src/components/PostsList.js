@@ -14,12 +14,38 @@ import { createSelector } from "reselect"
  * STYLED COMPONENTS
  */
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+`
+
 const Title = styled.h1`
+  flex-grow: 1;
   font-weight: bold;
   font-size: 1.1rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: #444;
+`
+
+const ButtonCreate = styled.button`
+  margin: -1rem -2rem;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #999;
+  cursor: pointer;
+  &:hover {
+    color: #dadada;
+  }
+  &:active {
+    color: #444;
+  }
 `
 
 const List = styled.ol`
@@ -87,7 +113,12 @@ class PostsList extends Component {
     const { category, posts } = this.props
     return (
       <section>
-        <Title>in regards to {category ? category.name : "all rappers"}</Title>
+        <Header>
+          <Title>
+            in regards to {category ? category.name : "all rappers"}
+          </Title>
+          <ButtonCreate>new post</ButtonCreate>
+        </Header>
         <List>
           {posts.map(postId => (
             <ListItem key={postId}>

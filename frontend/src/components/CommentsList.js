@@ -16,10 +16,32 @@ const Wrapper = styled.section`
   padding: 0 2rem;
 `
 
+const ButtonCreate = styled.button`
+  width: 100%;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 0.1rem solid #222;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: none;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #dadada;
+  }
+  &:active {
+    background: transparent;
+    color: #444;
+  }
+`
+
 const List = styled.ol`
   list-style-type: none;
   border: 0.1rem solid #222;
-  border-top: none;
   border-radius: 0 0 0.2rem 0.2rem;
 `
 
@@ -42,6 +64,7 @@ const Disclaimer = styled.p`
 
 const CommentsList = ({ comments, voteComment }) => (
   <Wrapper>
+    <ButtonCreate>Leave your flamming comment</ButtonCreate>
     <List>
       {comments && comments.length ? (
         comments.map(comment => (

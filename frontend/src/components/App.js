@@ -5,6 +5,7 @@ import Header from "./Header"
 import PostsList from "./PostsList"
 import PostDetails from "./PostDetails"
 import NotFound from "./NotFound"
+import Modal from "./Modal"
 // redux
 import { connect } from "react-redux"
 import { fetchCategories } from "../redux/actions"
@@ -90,6 +91,10 @@ class App extends Component {
               <Route path="/" component={NotFound} />
             </Switch>
           </Content>
+
+          {/* <Modal onDismiss={() => {}}>
+            <div />
+          </Modal> */}
         </div>
       </BrowserRouter>
     )
