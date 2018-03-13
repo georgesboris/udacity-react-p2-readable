@@ -72,8 +72,8 @@ const postsSelector = createSelector(
     activeCategory
       ? Object.keys(posts)
           .filter(id => posts[id].category === activeCategory)
-          .sort((a, b) => posts[a][orderBy] - posts[b][orderBy])
-      : Object.keys(posts).sort((a, b) => posts[a][orderBy] - posts[b][orderBy])
+          .sort((a, b) => posts[b][orderBy] - posts[a][orderBy])
+      : Object.keys(posts).sort((a, b) => posts[b][orderBy] - posts[a][orderBy])
 )
 
 /**

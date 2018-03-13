@@ -33,11 +33,23 @@ const VotingValue = styled.p`
 
 const VotingMechanism = ({ value, onVote }) => (
   <VotingWrapper>
-    <VotingButton onClick={() => onVote("upVote")}>
+    <VotingButton
+      onClick={e => {
+        e.stopPropagation()
+        e.preventDefault()
+        onVote("upVote")
+      }}
+    >
       <FaAngleUp color="white" size={22} />
     </VotingButton>
     <VotingValue>{value}</VotingValue>
-    <VotingButton onClick={() => onVote("downVote")}>
+    <VotingButton
+      onClick={e => {
+        e.stopPropagation()
+        e.preventDefault()
+        onVote("downVote")
+      }}
+    >
       <FaAngleDown color="white" size={22} />
     </VotingButton>
   </VotingWrapper>

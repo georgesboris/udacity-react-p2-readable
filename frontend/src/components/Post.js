@@ -31,9 +31,6 @@ const WrapperLink = styled(Link)`
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 2rem rgba(0, 0, 0, 1);
   }
-  &:active {
-    opacity: 0.6;
-  }
 `
 
 const Body = styled.p`
