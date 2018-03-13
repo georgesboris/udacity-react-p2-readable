@@ -57,7 +57,7 @@ class PostDetails extends Component {
   }
 
   setup(props) {
-    const { category, postId, fetchPost, history } = props
+    const { postId, fetchPost, history } = props
     this.setState({ isLoading: true })
 
     fetchPost(postId)

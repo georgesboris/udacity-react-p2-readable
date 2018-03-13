@@ -109,7 +109,7 @@ class Form extends Component {
   }
 
   render() {
-    const { title, fields, onSubmit } = this.props
+    const { title, fields } = this.props
     return (
       <Wrapper onSubmit={this.onSubmit}>
         <Title>{title}</Title>
