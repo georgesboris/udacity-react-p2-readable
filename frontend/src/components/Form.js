@@ -104,7 +104,9 @@ class Form extends Component {
     })
   }
 
-  onSubmit = () => {
+  onSubmit = e => {
+    e.preventDefault()
+    e.stopPropagation()
     this.props.onSubmit(this.state.fields)
   }
 

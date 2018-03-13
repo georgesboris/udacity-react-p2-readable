@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "flow-bin": "^0.67.1",
     "lodash": "^4.17.5",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -21,6 +22,7 @@
     "uuid": "^3.2.1"
   },
   "scripts": {
+    "flow": "flow",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

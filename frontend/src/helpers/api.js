@@ -1,11 +1,27 @@
+// @flow
+
+import type {
+  Post,
+  PostCreating,
+  Comment,
+  CommentCreating,
+  Category,
+  VoteOption
+} from "../redux/reducer"
 import unfetch from "unfetch"
+
+/**
+ * Types
+ */
+
+export type MaybePostResponse = Post | {| error: string |} | {||} | null
 
 /**
  * CONSTANTS
  */
 
 const API_URL = "http://localhost:3001"
-const Authorization = "whateva-will-be"
+const Authorization = "whateva-will-be-will-be"
 const headers = method =>
   method === "GET"
     ? { Authorization }
@@ -15,7 +31,7 @@ const headers = method =>
  * CURRIED FETCH
  */
 
-const fetch = (url, params, method) =>
+const fetch = (url: string, params?: ?Object, method?: string): Promise<*> =>
   unfetch(API_URL + url, {
     method: method ? method : !params ? "GET" : "POST",
     headers: headers(method),
@@ -26,24 +42,45 @@ const fetch = (url, params, method) =>
  * API METHODS
  */
 
-export const fetchCategories = () => fetch("/categories")
-export const fetchPosts = () => fetch("/posts")
-export const fetchCategoryPosts = category => fetch(`/${category}/posts`)
+export const fetchCategories = (): Promise<{ categories: Array<Category> }> =>
+  fetch("/categories")
 
-export const createPost = post => fetch("/posts", post)
-export const fetchPost = postId => fetch(`/posts/${postId}`)
-export const updatePost = post => fetch(`/posts/${post.id}`, post, "PUT")
-export const removePost = postId => fetch(`/posts/${postId}`, null, "DELETE")
+export const fetchPosts = (): Promise<Array<Post>> => fetch("/posts")
 
-export const votePost = (postId, option) =>
+export const fetchCategoryPosts = (category: string): Promise<Array<Post>> =>
+  fetch(`/${category}/posts`)
+
+export const createPost = (post: PostCreating): Promise<Post> =>
+  fetch("/posts", post)
+
+export const fetchPost = (postId: string): Promise<MaybePostResponse> =>
+  fetch(`/posts/${postId}`)
+
+export const updatePost = (post: Post): Promise<Post> =>
+  fetch(`/posts/${post.id}`, post, "PUT")
+
+export const removePost = (postId: string): Promise<Post> =>
+  fetch(`/posts/${postId}`, null, "DELETE")
+
+export const votePost = (postId: string, option: VoteOption) =>
   fetch(`/posts/${postId}`, { option })
-export const fetchPostComments = postId => fetch(`/posts/${postId}/comments`)
 
-export const createComment = comment => fetch(`/comments`, comment)
-export const fetchComment = commentId => fetch(`/comments/${commentId}`)
-export const voteComment = (commentId, option) =>
-  fetch(`/comments/${commentId}`, { option })
-export const updateComment = comment =>
-  fetch(`/comments/${comment.id}`, { comment }, "PUT")
-export const removeComment = commentId =>
+export const fetchPostComments = (postId: string): Promise<Array<Comment>> =>
+  fetch(`/posts/${postId}/comments`)
+
+export const createComment = (comment: CommentCreating): Promise<Comment> =>
+  fetch(`/comments`, comment)
+
+export const fetchComment = (commentId: string): Promise<Comment> =>
+  fetch(`/comments/${commentId}`)
+
+export const voteComment = (
+  commentId: string,
+  option: VoteOption
+): Promise<Comment> => fetch(`/comments/${commentId}`, { option })
+
+export const updateComment = (comment: Comment): Promise<Comment> =>
+  fetch(`/comments/${comment.id}`, comment, "PUT")
+
+export const removeComment = (commentId: string): Promise<Comment> =>
   fetch(`/comments/${commentId}`, null, "DELETE")

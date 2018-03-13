@@ -22,7 +22,6 @@ const FormupdateComment = ({
           ...comment,
           ...updatedComment
         })
-
         onSubmit && onSubmit()
       }}
       fields={[

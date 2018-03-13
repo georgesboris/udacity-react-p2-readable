@@ -1,4 +1,10 @@
+// @flow
+
 import omit from "lodash/omit"
+
+/**
+ * Actions
+ */
 
 export const SET_CATEGORIES = "readable/SET_CATEGORIES"
 export const SET_ORDER_BY = "readable/SET_ORDER_BY"
@@ -15,7 +21,82 @@ export const MODAL_UPDATE_POST = "readable/MODAL_UPDATE_POST"
 export const MODAL_CREATE_COMMENT = "readable/MODAL_CREATE_COMMENT"
 export const MODAL_UPDATE_COMMENT = "readable/MODAL_UPDATE_COMMENT"
 
-const initialStore = {
+/**
+ * Types
+ */
+
+export type PostCreating = {|
+  id: string,
+  author: string,
+  category: string,
+  title: string,
+  body: string,
+  timestamp: number
+|}
+
+export type Post = {|
+  id: string,
+  author: string,
+  category: string,
+  title: string,
+  body: string,
+  voteScore: number,
+  commentCount: number,
+  timestamp: string,
+  deleted: boolean
+|}
+
+export type CommentCreating = {|
+  id: string,
+  parentId: string,
+  author: string,
+  body: string,
+  timestamp: number
+|}
+
+export type Comment = {|
+  id: string,
+  parentId: string,
+  author: string,
+  body: string,
+  voteScore: number,
+  deleted: boolean,
+  parentDeleted: boolean
+|}
+
+export type Category = {|
+  name: string,
+  path: string
+|}
+
+export type VoteOption = "upVote" | "downVote"
+export type OrderByOption = "voteScore" | "timestamp"
+
+type State = {|
+  categories: Array<Category>,
+  orderBy: OrderByOption,
+  posts: {
+    [string]: Post
+  },
+  comments: {
+    [string]: Array<Comment>
+  },
+  modal: ?{
+    type: "CREATE_POST" | "UPDATE_POST" | "CREATE_COMMENT" | "UPDATE_COMMENT",
+    payload: *
+  }
+|}
+
+type Action = {|
+  type: $Keys<typeof module.exports>,
+  payload: any
+|}
+
+/**
+ * Reducer
+ */
+
+const initialState: State = {
   categories: [],
   orderBy: "voteScore",
   posts: {},
@@ -23,7 +104,7 @@ const initialStore = {
   modal: null
 }
 
-export default function(state = initialStore, action) {
+export default function(state: State = initialState, action: Action) {
   switch (action.type) {
     case SET_CATEGORIES:
       return {
