@@ -31,7 +31,7 @@ const Content = styled.div`
 const Modal = ({ children, onDismiss }) => {
   return (
     <Wrapper onClick={onDismiss}>
-      <Content onClick={e => e.stopPropagation()} />
+      <Content onClick={e => e.stopPropagation()}>{children}</Content>
     </Wrapper>
   )
 }

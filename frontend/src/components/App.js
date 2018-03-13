@@ -6,9 +6,13 @@ import PostsList from "./PostsList"
 import PostDetails from "./PostDetails"
 import NotFound from "./NotFound"
 import Modal from "./Modal"
+import FormCreatePost from "./FormCreatePost"
+import FormUpdatePost from "./FormUpdatePost"
+import FormCreateComment from "./FormCreateComment"
+import FormUpdateComment from "./FormUpdateComment"
 // redux
 import { connect } from "react-redux"
-import { fetchCategories } from "../redux/actions"
+import { fetchCategories, hideModal } from "../redux/actions"
 // etc
 import styled, { injectGlobal } from "styled-components"
 
@@ -58,6 +62,7 @@ class App extends Component {
   }
 
   render() {
+    const { modal, hideModal } = this.props
     return (
       <BrowserRouter>
         <div>
@@ -85,22 +90,45 @@ class App extends Component {
                 exact
                 path="/:category/:postId"
                 render={({ match }) => (
-                  <PostDetails postId={match.params.postId} />
+                  <PostDetails
+                    category={match.params.category}
+                    postId={match.params.postId}
+                  />
                 )}
               />
               <Route path="/" component={NotFound} />
             </Switch>
           </Content>
 
-          {/* <Modal onDismiss={() => {}}>
-            <div />
-          </Modal> */}
+          {!modal || !modal.type ? null : (
+            <Modal onDismiss={hideModal}>
+              {modal.type === "CREATE_POST" ? (
+                <FormCreatePost onSubmit={hideModal} />
+              ) : modal.type === "UPDATE_POST" ? (
+                <FormUpdatePost
+                  postId={modal.payload.postId}
+                  onSubmit={hideModal}
+                />
+              ) : modal.type === "CREATE_COMMENT" ? (
+                <FormCreateComment
+                  parentId={modal.payload.parentId}
+                  onSubmit={hideModal}
+                />
+              ) : modal.type === "UPDATE_COMMENT" ? (
+                <FormUpdateComment
+                  comment={modal.payload.comment}
+                  onSubmit={hideModal}
+                />
+              ) : null}
+            </Modal>
+          )}
         </div>
       </BrowserRouter>
     )
   }
 }
 
-export default connect(null, {
-  fetchCategories
+export default connect(state => ({ modal: state.modal }), {
+  fetchCategories,
+  hideModal
 })(App)

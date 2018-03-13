@@ -5,7 +5,11 @@ import { withRouter } from "react-router"
 // redux
 import { compose } from "redux"
 import { connect } from "react-redux"
-import { fetchPosts, fetchCategoryPosts } from "../redux/actions"
+import {
+  fetchPosts,
+  fetchCategoryPosts,
+  showCreatePostModal
+} from "../redux/actions"
 // etc
 import styled from "styled-components"
 import { createSelector } from "reselect"
@@ -110,14 +114,14 @@ class PostsList extends Component {
   }
 
   render() {
-    const { category, posts } = this.props
+    const { category, posts, showCreatePostModal } = this.props
     return (
       <section>
         <Header>
           <Title>
             in regards to {category ? category.name : "all rappers"}
           </Title>
-          <ButtonCreate>new post</ButtonCreate>
+          <ButtonCreate onClick={showCreatePostModal}>new post</ButtonCreate>
         </Header>
         <List>
           {posts.map(postId => (
@@ -143,7 +147,8 @@ export default compose(
     }),
     {
       fetchPosts,
-      fetchCategoryPosts
+      fetchCategoryPosts,
+      showCreatePostModal
     }
   )
 )(PostsList)

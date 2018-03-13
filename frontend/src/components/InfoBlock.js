@@ -38,14 +38,6 @@ const Time = styled.time`
   text-transform: uppercase;
 `
 
-const Body = styled.p`
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid #2a2a2a;
-  font-size: 1.2rem;
-  line-height: 1.4em;
-`
-
 const Actions = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,10 +103,22 @@ const InfoBlock = ({
             <FaComments size={18} />
           </ActionButton>
         )}
-        <ActionButton onClick={onEdit}>
+        <ActionButton
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            onEdit()
+          }}
+        >
           <FaPencil size={18} />
         </ActionButton>
-        <ActionButton onClick={onRemove}>
+        <ActionButton
+          onClick={e => {
+            e.preventDefault()
+            e.stopPropagation()
+            onRemove()
+          }}
+        >
           <FaTrash size={18} />
         </ActionButton>
       </Actions>
@@ -123,7 +127,7 @@ const InfoBlock = ({
 }
 InfoBlock.propTypes = {
   small: PropTypes.bool,
-  header: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   timestamp: PropTypes.number.isRequired,
   voteScore: PropTypes.number.isRequired,

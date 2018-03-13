@@ -41,16 +41,23 @@ class PostDetails extends Component {
   }
 
   componentDidMount() {
-    this.setup(this.props.postId)
+    this.setup(this.props)
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.postId !== nextProps.postId) {
-      this.setup(nextProps.postId)
+      this.setup(nextProps)
+    } else if (
+      nextProps.post &&
+      nextProps.post.category !== nextProps.category
+    ) {
+      nextProps.history.replace(
+        `/${nextProps.post.category}/${nextProps.postId}`
+      )
     }
   }
 
-  setup(postId) {
-    const { fetchPost, history } = this.props
+  setup(props) {
+    const { category, postId, fetchPost, history } = props
     this.setState({ isLoading: true })
 
     fetchPost(postId)
@@ -79,12 +86,13 @@ class PostDetails extends Component {
   }
 }
 PostDetails.propTypes = {
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired
 }
 
 export default compose(
   withRouter,
-  connect(null, {
+  connect((state, props) => ({ post: state.posts[props.postId] }), {
     fetchPost
   })
 )(PostDetails)

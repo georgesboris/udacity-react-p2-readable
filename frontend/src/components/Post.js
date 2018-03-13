@@ -4,7 +4,7 @@ import InfoBlock from "./InfoBlock"
 import { Link } from "react-router-dom"
 // redux
 import { connect } from "react-redux"
-import { votePost } from "../redux/actions"
+import { votePost, showUpdatePostModal, removePost } from "../redux/actions"
 // etc
 import styled from "styled-components"
 import PropTypes from "prop-types"
@@ -48,16 +48,26 @@ const Body = styled.p`
  * MAIN COMPONENT
  */
 
-const Post = ({ postId, post, showBody, isLink, votePost }) => {
+const Post = ({
+  postId,
+  post,
+  comments,
+  showBody,
+  isLink,
+  votePost,
+  showUpdatePostModal,
+  removePost
+}) => {
   const component = !post ? (
     <Wrapper />
   ) : (
     <Wrapper>
       <InfoBlock
         {...post}
+        commentCount={comments ? comments.length : 0}
         onVote={option => votePost(postId, option)}
-        onEdit={() => {}}
-        onRemove={() => {}}
+        onEdit={() => showUpdatePostModal(postId)}
+        onRemove={() => removePost(postId)}
       />
       {showBody && <Body>{post.body}</Body>}
     </Wrapper>
@@ -85,9 +95,12 @@ Post.propTypes = {
 
 export default connect(
   (state, props) => ({
-    post: state.posts[props.postId]
+    post: state.posts[props.postId],
+    comments: state.comments[props.postId]
   }),
   {
-    votePost
+    votePost,
+    showUpdatePostModal,
+    removePost
   }
 )(Post)

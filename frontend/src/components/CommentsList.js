@@ -3,7 +3,12 @@ import React from "react"
 import InfoBlock from "./InfoBlock"
 // redux
 import { connect } from "react-redux"
-import { voteComment } from "../redux/actions"
+import {
+  voteComment,
+  showCreateCommentModal,
+  showUpdateCommentModal,
+  removeComment
+} from "../redux/actions"
 // etc
 import styled from "styled-components"
 import PropTypes from "prop-types"
@@ -62,9 +67,19 @@ const Disclaimer = styled.p`
  * MAIN COMPONENT
  */
 
-const CommentsList = ({ comments, voteComment }) => (
+const CommentsList = ({
+  postId,
+  comments,
+  voteComment,
+  showCreateCommentModal,
+  showUpdateCommentModal,
+  removeComment,
+  onCreate
+}) => (
   <Wrapper>
-    <ButtonCreate>Leave your flamming comment</ButtonCreate>
+    <ButtonCreate onClick={() => showCreateCommentModal(postId)}>
+      Leave your flamming comment
+    </ButtonCreate>
     <List>
       {comments && comments.length ? (
         comments.map(comment => (
@@ -74,8 +89,8 @@ const CommentsList = ({ comments, voteComment }) => (
               {...comment}
               title={comment.body}
               onVote={option => voteComment(comment.id, option)}
-              onEdit={() => {}}
-              onRemove={() => {}}
+              onEdit={() => showUpdateCommentModal(comment)}
+              onRemove={() => removeComment(comment)}
             />
           </ListItem>
         ))
@@ -98,6 +113,9 @@ export default connect(
       : null
   }),
   {
-    voteComment
+    voteComment,
+    showCreateCommentModal,
+    showUpdateCommentModal,
+    removeComment
   }
 )(CommentsList)

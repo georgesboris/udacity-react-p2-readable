@@ -32,8 +32,7 @@ export const fetchCategoryPosts = category => fetch(`/${category}/posts`)
 
 export const createPost = post => fetch("/posts", post)
 export const fetchPost = postId => fetch(`/posts/${postId}`)
-export const updatePost = (postId, post) =>
-  fetch(`/posts/${postId}`, post, "PUT")
+export const updatePost = post => fetch(`/posts/${post.id}`, post, "PUT")
 export const removePost = postId => fetch(`/posts/${postId}`, null, "DELETE")
 
 export const votePost = (postId, option) =>
@@ -44,7 +43,7 @@ export const createComment = comment => fetch(`/comments`, comment)
 export const fetchComment = commentId => fetch(`/comments/${commentId}`)
 export const voteComment = (commentId, option) =>
   fetch(`/comments/${commentId}`, { option })
-export const updateComment = (commentId, comment) =>
-  fetch(`/comments/${commentId}`, { comment }, "PUT")
+export const updateComment = comment =>
+  fetch(`/comments/${comment.id}`, { comment }, "PUT")
 export const removeComment = commentId =>
   fetch(`/comments/${commentId}`, null, "DELETE")
