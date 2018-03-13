@@ -86,13 +86,15 @@ export const createPost = post => dispatch => {
 }
 
 export const updatePost = post => dispatch => {
-  return api.updatePost(post).then(dispatch(_addPost(post)))
+  return api.updatePost(post).then(() => dispatch(_addPost(post)))
 }
 
 export const removePost = postId => dispatch => {
   return api
     .removePost(postId)
-    .then(dispatch({ type: actions.REMOVE_POST, payload: { id: postId } }))
+    .then(() =>
+      dispatch({ type: actions.REMOVE_POST, payload: { id: postId } })
+    )
 }
 
 export const votePost = (postId, option) => dispatch => {
@@ -118,9 +120,9 @@ export const updateComment = comment => dispatch => {
 }
 
 export const removeComment = comment => dispatch => {
-  return api
-    .removeComment(comment)
-    .then(dispatch({ type: actions.REMOVE_COMMENT, payload: comment }))
+  return api.removeComment(comment).then(() => {
+    dispatch({ type: actions.REMOVE_COMMENT, payload: comment })
+  })
 }
 
 export const voteComment = (commentId, option) => dispatch => {

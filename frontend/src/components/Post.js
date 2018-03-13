@@ -61,7 +61,7 @@ const Post = ({
     <Wrapper>
       <InfoBlock
         {...post}
-        commentCount={comments ? comments.length : 0}
+        commentCount={comments ? comments.length : post.commentCount}
         onVote={option => votePost(postId, option)}
         onEdit={() => showUpdatePostModal(postId)}
         onRemove={() => removePost(postId)}
