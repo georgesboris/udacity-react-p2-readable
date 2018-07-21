@@ -1,16 +1,12 @@
-require("dotenv").config()
-
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const config = require("./config")
 const categories = require("./categories")
 const posts = require("./posts")
 const comments = require("./comments")
 
 const app = express()
 
-app.use(express.static("public"))
 app.use(cors())
 
 app.get("/", (req, res) => {
@@ -116,9 +112,9 @@ app.use((req, res, next) => {
 
   if (token) {
     req.token = token
-    next()
+    return next()
   } else {
-    res.status(403).send({
+    return res.status(403).send({
       error:
         "Please provide an Authorization header to identify yourself (can be whatever you want)"
     })
@@ -134,7 +130,7 @@ app.get("/categories", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.get("/:category/posts", (req, res) => {
@@ -146,7 +142,7 @@ app.get("/:category/posts", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.get("/posts", (req, res) => {
@@ -158,7 +154,7 @@ app.get("/posts", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.post("/posts", bodyParser.json(), (req, res) => {
@@ -170,7 +166,7 @@ app.post("/posts", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.get("/posts/:id", (req, res) => {
@@ -182,7 +178,7 @@ app.get("/posts/:id", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.delete("/posts/:id", (req, res) => {
@@ -198,6 +194,7 @@ app.delete("/posts/:id", (req, res) => {
         })
       }
     )
+    .catch(console.error)
 })
 
 app.post("/posts/:id", bodyParser.json(), (req, res) => {
@@ -211,7 +208,7 @@ app.post("/posts/:id", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.put("/posts/:id", bodyParser.json(), (req, res) => {
@@ -223,7 +220,7 @@ app.put("/posts/:id", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.get("/posts/:id/comments", (req, res) => {
@@ -235,7 +232,7 @@ app.get("/posts/:id/comments", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.get("/comments/:id", (req, res) => {
@@ -247,7 +244,7 @@ app.get("/comments/:id", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.put("/comments/:id", bodyParser.json(), (req, res) => {
@@ -259,7 +256,7 @@ app.put("/comments/:id", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.post("/comments", bodyParser.json(), (req, res) => {
@@ -271,7 +268,7 @@ app.post("/comments", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.post("/comments/:id", bodyParser.json(), (req, res) => {
@@ -284,7 +281,7 @@ app.post("/comments/:id", bodyParser.json(), (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
 app.delete("/comments/:id", (req, res) => {
@@ -296,9 +293,7 @@ app.delete("/comments/:id", (req, res) => {
         error: "There was an error."
       })
     }
-  )
+  ).catch(console.error)
 })
 
-app.listen(config.port, () => {
-  console.log("Server listening on port %s, Ctrl+C to stop", config.port)
-})
+module.exports = app
