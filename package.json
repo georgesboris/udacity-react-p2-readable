@@ -7,6 +7,9 @@
   "scripts": {
     "start": "node server.js"
   },
+  "engines": {
+    "node": "8.9.4"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
