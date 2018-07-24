@@ -3,9 +3,9 @@
   "version": "0.0.2",
   "description": "An updated version for the Udacity Reddit Clone project for ReactND",
   "author": "David Harris, Georges Boris",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "license": "ISC",
   "dependencies": {
