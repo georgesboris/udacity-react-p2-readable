@@ -1,16 +1,12 @@
-require("dotenv").config()
-
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const config = require("./config")
-const categories = require("./categories")
-const posts = require("./posts")
-const comments = require("./comments")
-
 const app = express()
 
-app.use(express.static("public"))
+const categories = require("./src/categories")
+const posts = require("./src/posts")
+const comments = require("./src/comments")
+
 app.use(cors())
 
 app.get("/", (req, res) => {
@@ -299,6 +295,7 @@ app.delete("/comments/:id", (req, res) => {
   )
 })
 
-app.listen(config.port, () => {
-  console.log("Server listening on port %s, Ctrl+C to stop", config.port)
-})
+app.listen(
+  process.env.PORT || 5000,
+  () => console.log(`Listening on ${ PORT }`)
+)

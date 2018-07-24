@@ -1,0 +1,17 @@
+{
+  "name": "udacity-react-p2-readable-server",
+  "version": "0.0.2",
+  "description": "An updated version for the Udacity Reddit Clone project for ReactND",
+  "author": "David Harris, Georges Boris",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "cors": "^2.8.3",
+    "express": "^4.15.2"
+  }
+}
