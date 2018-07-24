@@ -297,5 +297,5 @@ app.delete("/comments/:id", (req, res) => {
 
 app.listen(
   process.env.PORT || 5000,
-  () => console.log(`Listening on ${ PORT }`)
+  () => console.log(`Listening on ${ process.env.PORT || 5000 }`)
 )
