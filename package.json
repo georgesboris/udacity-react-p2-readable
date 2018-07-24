@@ -5,7 +5,8 @@
   "author": "David Harris, Georges Boris",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "git push heroku showcase-server:master"
   },
   "engines": {
     "node": "8.9.4"
