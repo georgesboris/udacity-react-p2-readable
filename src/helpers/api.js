@@ -20,7 +20,7 @@ export type MaybePostResponse = Post | {| error: string |} | {||} | null
  * CONSTANTS
  */
 
-const API_URL = "https://us-central1-uda-react-p2-readable.cloudfunctions.net/api"
+const API_URL = "https://udacity-react-p2-readable.herokuapp.com"
 const Authorization = "whateva-will-be-will-be"
 const headers = method =>
   method === "GET"
